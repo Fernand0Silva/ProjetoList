@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./Agenda.css">
+    <title>Agenda Tarefa</title>
+</head>
+
+<body>
+    <h1>Tarefas</h1>
+    <!--<div class="main">
+        <div class="lista">
+            <h1>Agenda de Tarefas</h1>
+            <input type="text" id="descricao" placeholder="descrição"> <br>
+            <input type="date" id="dataEntrega" placeholder="yyyy-mm-dd"> <br>
+            <button onclick="salvarTarefa()">Adicionar</button> <br>
+            <button onclick="listarTarefa()">Listar</button> <br>     
+        </div>
+    </div>-->
+
+    <div class="lista">
+        <input type="text" class="input" id="descricao" placeholder="Descrição">
+        <input type="date" class="input"id="dataEntrega">
+        <button onclick="salvarTarefa()" id="salva">Salvar</button>
+        <ul id="lista-tarefa"></ul>
+    </div>
+
+    <script>
+        const API = 'http://localhost:8080/list';
+        let idEditando = null;
+
+        function listarTarefa() {
+            fetch(API)
+                .then(res => res.json())
+                .then(tarefas => {
+                    const lista = document.getElementById('lista-tarefa');
+                    lista.innerHTML = '';
+                    tarefas.forEach(tarefa => {
+                        const item = document.createElement('li');
+                        item.innerHTML = `
+                            <strong>${tarefa.tarefa}</strong> - ${tarefa.dataEntrega}
+                            <button onclick="editarTarefa(${tarefa.id}, '${tarefa.tarefa}', '${tarefa.dataEntrega}')">Editar</button>
+                            <button onclick="deletarTarefa(${tarefa.id})">Deletar</button>
+                        `;
+                        lista.appendChild(item);
+                    });
+                });
+        }
+        function salvarTarefa() {
+            const descricao = document.getElementById('descricao').value;
+            const dataEntrega = document.getElementById('dataEntrega').value;
+
+            if (!descricao || !dataEntrega) {
+                alert('Preencha todos os campos!');
+                return;
+            }
+
+            const metodo = idEditando ? 'PUT' : 'POST';
+            const url = API;
+
+            fetch(url, {
+                method: metodo,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: idEditando, tarefa: descricao, dataEntrega })
+
+            })
+                .then(res => res.json())
+                .then(() => {
+                    document.getElementById('descricao').value = '';
+                    document.getElementById('dataEntrega').value = '';
+                    idEditando = null;
+                    listarTarefa();
+                });
+        }
+
+        function editarTarefa(id, descricao, dataEntrega) {
+            document.getElementById('descricao').value = descricao;
+            document.getElementById('dataEntrega').value = dataEntrega;
+            idEditando = id;
+        }
+
+        function deletarTarefa(id) {
+            fetch(`${API}/${id}`, { method: 'DELETE' })
+                .then(res => res.json())
+                .then(() => listarTarefa());
+        }
+
+        // Carrega as tarefas ao iniciar
+        listarTarefa();
+    </script>
+</body>
+
+</html>
