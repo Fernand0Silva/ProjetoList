@@ -18,72 +18,8 @@
             <ul id="lista-tarefa"></ul>
         </div>
 </div>
-    <script>
-        const API = 'http://localhost:8080/list';
-        let idEditando = null;
-
-        function listarTarefa() {
-            fetch(API)
-                .then(res => res.json())
-                .then(tarefas => {
-                    const lista = document.getElementById('lista-tarefa');
-                    lista.innerHTML = '';
-                    tarefas.forEach(tarefa => {
-                        const item = document.createElement('li');
-                        item.innerHTML = `
-                            <div class="botoes">
-                                <strong>${tarefa.tarefa}</strong> ${tarefa.dataEntrega}
-                                <div class="botoes">
-                                    <button id="btn-editar"  onclick="editarTarefa(${tarefa.id}, '${tarefa.tarefa}', '${tarefa.dataEntrega}')"><img class="img-editar" src="img/editar.png" alt="editar"></button>
-                                    <button id="btn-deletar" onclick="deletarTarefa(${tarefa.id})"><img class="img-deletar" src="img/deletar.png" alt="deletar"></button>
-                                </div>
-                            </div>
-                        `;
-                        lista.appendChild(item);
-                    });
-                });
-        }
-        function salvarTarefa() {
-            const descricao = document.getElementById('descricao').value;
-            const dataEntrega = document.getElementById('dataEntrega').value;
-
-            if (!descricao || !dataEntrega) {
-                alert('Preencha todos os campos!');
-                return;
-            }
-
-            const metodo = idEditando ? 'PUT' : 'POST';
-            const url = API;
-
-            fetch(url, {
-                method: metodo,
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id: idEditando, tarefa: descricao, dataEntrega })
-
-            })
-                .then(res => res.json())
-                .then(() => {
-                    document.getElementById('descricao').value = '';
-                    document.getElementById('dataEntrega').value = '';
-                    idEditando = null;
-                    listarTarefa();
-                });
-        }
-
-        function editarTarefa(id, descricao, dataEntrega) {
-            document.getElementById('descricao').value = descricao;
-            document.getElementById('dataEntrega').value = dataEntrega;
-            idEditando = id;
-        }
-
-        function deletarTarefa(id) {
-            fetch(`${API}/${id}`, { method: 'DELETE' })
-                .then(res => res.json())
-                .then(() => listarTarefa());
-        }
-
-        // Carrega as tarefas ao iniciar
-        listarTarefa();
+    <script src="./Js/script.js">
+       
     </script>
 </body>
 
