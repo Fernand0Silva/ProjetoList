@@ -1,32 +1,23 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./Agenda.css">
+    <link rel="stylesheet" href="./Css/Agenda.css">
+    <link rel="stylesheet" href="./Css/respon.css">
     <title>Agenda Tarefa</title>
 </head>
 
 <body>
-    <h1>Tarefas</h1>
-    <!--<div class="main">
+    <div class="main">
+        <h1>Tarefas</h1>
         <div class="lista">
-            <h1>Agenda de Tarefas</h1>
-            <input type="text" id="descricao" placeholder="descrição"> <br>
-            <input type="date" id="dataEntrega" placeholder="yyyy-mm-dd"> <br>
-            <button onclick="salvarTarefa()">Adicionar</button> <br>
-            <button onclick="listarTarefa()">Listar</button> <br>     
+            <input type="text" class="input" id="descricao" placeholder="Descrição">
+            <input type="date" class="input"id="dataEntrega">
+            <button onclick="salvarTarefa()" id="salva">Salvar</button>
+            <ul id="lista-tarefa"></ul>
         </div>
-    </div>-->
-
-    <div class="lista">
-        <input type="text" class="input" id="descricao" placeholder="Descrição">
-        <input type="date" class="input"id="dataEntrega">
-        <button onclick="salvarTarefa()" id="salva">Salvar</button>
-        <ul id="lista-tarefa"></ul>
-    </div>
-
+</div>
     <script>
         const API = 'http://localhost:8080/list';
         let idEditando = null;
@@ -40,9 +31,13 @@
                     tarefas.forEach(tarefa => {
                         const item = document.createElement('li');
                         item.innerHTML = `
-                            <strong>${tarefa.tarefa}</strong> - ${tarefa.dataEntrega}
-                            <button onclick="editarTarefa(${tarefa.id}, '${tarefa.tarefa}', '${tarefa.dataEntrega}')">Editar</button>
-                            <button onclick="deletarTarefa(${tarefa.id})">Deletar</button>
+                            <div class="botoes">
+                                <strong>${tarefa.tarefa}</strong> ${tarefa.dataEntrega}
+                                <div class="botoes">
+                                    <button id="btn-editar"  onclick="editarTarefa(${tarefa.id}, '${tarefa.tarefa}', '${tarefa.dataEntrega}')"><img class="img-editar" src="img/editar.png" alt="editar"></button>
+                                    <button id="btn-deletar" onclick="deletarTarefa(${tarefa.id})"><img class="img-deletar" src="img/deletar.png" alt="deletar"></button>
+                                </div>
+                            </div>
                         `;
                         lista.appendChild(item);
                     });

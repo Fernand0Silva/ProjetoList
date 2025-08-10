@@ -1,0 +1,81 @@
+@media (max-width: 460px){
+    body{
+    margin: 0;
+    padding: 0;
+    background-color: aqua;
+
+
+    }
+    .main{
+    background-color: aqua;
+    display: flex;
+    justify-self: center;
+    flex-direction: column;
+    margin-top: 30px;
+    width: 100%;
+
+}
+button{
+    color: white;
+    border-radius: 50px;
+    
+}
+.img-editar{
+    width: 70px;
+    height: 30px;
+    display: block;
+    margin: 0 auto;
+    position: relative;
+    left: 5%;
+}
+#btn-editar{
+    position: relative;
+    left: 12rem;
+    top: -2rem;
+    width: 90px;
+    height: 40px;
+    margin: 1px;
+    margin: 2px;
+    background-color: rgb(50, 50, 230);
+}
+#btn-deletar {
+    background-color: red;
+    width: 90px;
+    height: 40px;
+    margin: 1px;
+    margin: 2px;
+    position: relative;
+    top: -5rem;
+    left: 6rem;
+}
+#btn-deletar .img-deletar{
+    width: 50px;
+    height: 30px;
+    display: block;
+    margin: 0 auto;
+}
+.lista {
+    display: flex;
+    justify-self: center;
+    flex-direction: column;
+    margin-left: 10px;
+    width: 10%;
+    height: 50%;
+    gap: 2px;
+}
+input{
+    width: 20rem;
+    height: 30px;
+}
+#salva{
+    width: 20rem;
+    height: 30px ;
+}
+#salva{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background-color: rgb(12, 199, 12);
+    margin: 3px;
+}
+}
